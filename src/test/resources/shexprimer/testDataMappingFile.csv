@@ -1,0 +1,3 @@
+#fileToValidateName, shexFileName, mappingFileName, expectedResultMappingFile
+shexprimer/student-mixed-results.ttl,shexprimer/student1.shex,shexprimer/student1.sm,shexprimer/expectedStudent1.sm
+shexprimer/userData.ttl,shexprimer/user.shex,shexprimer/user.sm,shexprimer/expectedUser.sm
