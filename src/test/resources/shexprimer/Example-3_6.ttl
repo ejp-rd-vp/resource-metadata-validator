@@ -1,0 +1,27 @@
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX inst: <http://inst.example/#>
+
+inst:User1 a foaf:Person ;
+    foaf:name       "Alice Walker" ;
+    foaf:mbox       <mailto:awalker@example.org> .
+
+inst:User2 a foaf:Person ;
+    foaf:givenName  "Robert" ;
+    foaf:givenName  "Paris" ;
+    foaf:familyName "Moses" ;
+    foaf:mbox       <mailto:rpmoses@example.org> .
+
+inst:User3 a foaf:Person ;
+    foaf:givenName  "Smith" ;
+    foaf:mbox       <mailto:bobs@example.org> .
+
+inst:User4 a foaf:Person ;
+    foaf:name       "A" ;
+    foaf:givenName  "B" ;
+    foaf:familyName "C" ;
+    foaf:mbox       <mailto:bobs@example.org> .
+
+inst:User5 a foaf:Person ;
+    foaf:name       "A" ;
+    foaf:givenName  "B" ;
+    foaf:mbox       <mailto:bobs@example.org> .

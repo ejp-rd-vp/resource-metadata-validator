@@ -1,0 +1,15 @@
+PREFIX ex: <http://ex.example/#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX my: <http://my.example/#>
+
+my:IssueShape {
+  ex:state [ex:accepted ex:resolved];
+  ex:reproducedBy @my:EmployeeShape
+}
+
+my:EmployeeShape IRI
+ /^http:\/\/hr\.example\/id#[0-9]+/ {
+  foaf:name LITERAL;
+  ex:department [ex:ProgrammingDepartment]
+}

@@ -1,0 +1,11 @@
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX inst: <http://inst.example/#>
+PREFIX ex: <http://ex.example/#>
+
+inst:Issue1
+  ex:state ex:accepted ;
+  ex:reproducedBy <http://hr.example/id#123> .
+
+<http://hr.example/id#123>
+  foaf:name "Bob Smith" ;
+  ex:department ex:ProgrammingDepartment .

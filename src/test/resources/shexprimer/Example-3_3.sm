@@ -1,0 +1,4 @@
+inst:Issue3@<http://my.example/#IssueShape>,
+inst:User4@<http://my.example/#UserShape>,
+inst:Issue1@<http://my.example/#IssueShape>,
+inst:User2@<http://my.example/#UserShape>

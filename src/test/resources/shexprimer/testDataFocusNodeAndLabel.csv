@@ -1,0 +1,7 @@
+#fileToValidateName, shexFileName, strFocusNode, strShapeLabel, expectedResult
+shexprimer/student-passing-guardian.ttl,shexprimer/student.shex,http://example.com/users/Student1,http://school.example/#Enrollee,true
+shexprimer/student-failing-guardian.ttl,shexprimer/student.shex,http://example.com/users/Student1,http://school.example/#Enrollee,false
+shexprimer/student-mixed-results.ttl,shexprimer/student1.shex,http://example.com/users/Alice,http://school.example/#Enrollee,true
+shexprimer/student-mixed-results.ttl,shexprimer/student1.shex,http://example.com/users/Bob,http://school.example/#Enrollee,true
+shexprimer/student-mixed-results.ttl,shexprimer/student1.shex,http://example.com/users/Claire,http://school.example/#Enrollee,false
+shexprimer/student-mixed-results.ttl,shexprimer/student1.shex,http://example.com/users/Don,http://school.example/#Enrollee,false

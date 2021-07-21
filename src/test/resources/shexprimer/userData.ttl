@@ -1,0 +1,17 @@
+PREFIX ex: <http://ex.example/#>
+PREFIX inst: <http://example.com/users/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+inst:User1
+    foaf:name  "Bob Smith"^^xsd:string .
+
+inst:User2
+    foaf:name  "Bob Smith" .
+
+inst:User3
+    foaf:name  "Joe Jones"^^xsd:string ;
+    foaf:name  "J. Jones"^^xsd:string .
+
+inst:User4
+    foaf:name  "Bob Smith"^^xsd:anyURI .

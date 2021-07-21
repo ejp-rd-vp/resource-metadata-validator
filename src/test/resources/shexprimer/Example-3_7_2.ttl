@@ -1,0 +1,13 @@
+PREFIX ex: <http://a.example/#>
+PREFIX my: <http://my.example/#>
+PREFIX excodes: <http://a.example/codes#>
+PREFIX auxterms: <http://aux.example/terms#>
+PREFIX inst: <http://inst.example/#>
+
+inst:Issue2 ex:status  excodes:resolved .
+
+inst:Issue3 ex:status  excodes:assigned.
+
+inst:Issue4 ex:status  auxterms:med_sniffles.
+
+inst:Issue5 ex:status  ex:done.

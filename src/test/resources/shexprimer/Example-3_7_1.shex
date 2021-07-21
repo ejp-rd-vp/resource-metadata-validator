@@ -1,0 +1,10 @@
+PREFIX ex: <http://a.example/#>
+PREFIX my: <http://my.example/#>
+PREFIX excodes: <http://a.example/codes#>
+PREFIX auxterms: <http://aux.example/terms#>
+
+my:IssueShape {
+  ex:status   [ excodes:~ auxterms:~ ];
+  ex:mood     [ @en~ - @en-fr ];
+ ^ex:hasIssue [ my:Product1 my:Product2 ]
+}
