@@ -7,7 +7,6 @@ import es.weso.shapemaps.ResultShapeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -16,16 +15,16 @@ import java.io.InputStream;
 public class ShaclexValidator {
     private static Logger logger = LoggerFactory.getLogger(ShaclexValidator.class);
 
-    public static ResultShapeMap validateUsingFiles(String rdfFileName, String shexFileName, String shapeMapFileName)
+    public static ResultShapeMap validateUsingMappingFiles(String rdfFileName, String shexFileName, String shapeMapFileName)
                                                     throws FileNotFoundException{
 
         ShExsOptions shExsOptions = ShExsOptions.defaultOptions();
-        ResultShapeMap resultShapeMap = validateUsingFiles(rdfFileName, shexFileName, shapeMapFileName, shExsOptions);
+        ResultShapeMap resultShapeMap = validateUsingMappingFiles(rdfFileName, shexFileName, shapeMapFileName, shExsOptions);
         return resultShapeMap;
     }
 
-    public static ResultShapeMap validateUsingFiles(String rdfFileName, String shexFileName, String shapeMapFileName,
-                                                    ShExsOptions shExsOptions) throws FileNotFoundException {
+    public static ResultShapeMap validateUsingMappingFiles(String rdfFileName, String shexFileName, String shapeMapFileName,
+                                                           ShExsOptions shExsOptions) throws FileNotFoundException {
 
         InputStream rdfInputStream = new FileInputStream(rdfFileName);
         InputStream shexInputStream = new FileInputStream(shexFileName);
@@ -33,6 +32,14 @@ public class ShaclexValidator {
         ResultShapeMap resultShapeMap = ShExWrapper.validate(rdfInputStream, shexInputStream, shapeMapInputStream,
                 shExsOptions);
         return resultShapeMap;
+    }
+
+    public static ResultShapeMap validate(String data, String shex, String shapeMap) {
+        ShExsOptions shExsOptions = ShExsOptions.defaultOptions();
+        return validate(data, shex, shapeMap, shExsOptions);
+    }
+    public static ResultShapeMap validate(String data, String shex, String shapeMap, ShExsOptions shExsOptions) {
+        return ShExWrapper.validate(data, shex, shapeMap, shExsOptions);
     }
 
     public static ResultShapeMap validateUsingFocusNodeAndLabel(String rdfData, String shexSchema, String node, String label){

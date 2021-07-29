@@ -1,0 +1,13 @@
+PREFIX ex: <http://ex.example/#>
+PREFIX inst: <http://example.com/users/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+inst:Employee2 foaf:name "Bob" ;
+  foaf:mbox <mailto:bob@example.com> ;
+  ex:employeeID "e02" .
+
+inst:Employee3 ex:employeeID "e03" .
+
+inst:User1 foaf:name "Alice" ;
+  foaf:mbox <mailto:alice@example.com> ;
+  ex:userID "u01" .

@@ -7,6 +7,7 @@ import es.weso.shapemaps.Association;
 import es.weso.shapemaps.ResultShapeMap;
 import es.weso.shapemaps.ShapeMap;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.opentest4j.AssertionFailedError;
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class ShaclexValidatorTest {
     private static Logger logger = LoggerFactory.getLogger(ShaclexValidatorTest.class);
+    private static final String RELATIVE_PATH = "${RelativePath}";
 
     @ParameterizedTest
     @CsvFileSource(resources = "/shexprimer/testDataFocusNodeAndLabel.csv")
@@ -65,22 +67,6 @@ public class ShaclexValidatorTest {
         }
     }
 
-    private static String getFileDataAsString(String strUserDirectory, String strRelativeDirectory, String strFileName)
-            throws IOException {
-        String strAbsoluteFileName = (new StringBuffer(strUserDirectory))
-                .append(strRelativeDirectory)
-                .append(strFileName)
-                .toString();
-        File file = new File(strAbsoluteFileName);
-        return FileUtils.readFileToString(file, Charset.defaultCharset());
-    }
-
-    private static String getFileDataAsString(String strAbsoluteFileName)
-            throws IOException {
-        File file = new File(strAbsoluteFileName);
-        return FileUtils.readFileToString(file, Charset.defaultCharset());
-    }
-
     @ParameterizedTest
     @CsvFileSource(resources = "/shexprimer/testDataMappingFile.csv")
     void testShexPrimerExamplesUsingMappingFile(String fileToValidateName, String shexFileName, String mappingFileName,
@@ -97,7 +83,7 @@ public class ShaclexValidatorTest {
 
         Optional<ResultShapeMap> resultShapeMapOptional = Optional.empty();
         try {
-            resultShapeMapOptional = Optional.of(ShaclexValidator.validateUsingFiles(absoluteFileToValidateName,
+            resultShapeMapOptional = Optional.of(ShaclexValidator.validateUsingMappingFiles(absoluteFileToValidateName,
                     absoluteShexFileName, absoluteMappingFileName));
 
         } catch (FileNotFoundException e) {
@@ -113,6 +99,10 @@ public class ShaclexValidatorTest {
         String absoluteExpectedResultShapeMapFileName = (new StringBuffer(userDirectory))
                 .append(relativeDirectory).append(expectedResultShapeMapFileName).toString();
 
+        compareActualShapeMapWithExpected(resultShapeMap, absoluteExpectedResultShapeMapFileName);
+    }
+
+    private void compareActualShapeMapWithExpected(ResultShapeMap resultShapeMap, String absoluteExpectedResultShapeMapFileName) {
         ShapeMap expectedShapeMap = null;
         try {
             expectedShapeMap = readCompactResultShapeMap(
@@ -133,6 +123,58 @@ public class ShaclexValidatorTest {
         }
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/shexprimer/testDataSchemasWithImports.csv")
+    void testShexPrimerImportExamples(String fileToValidateName, String shexFileName, String mappingFileName,
+                                                String expectedResultShapeMapFileName) {
+        String userDirectory = System.getProperty("user.dir");
+        String relativeDirectory = "/src/test/resources/";
+        String absoluteRelativePath = (new StringBuffer(userDirectory))
+                .append(relativeDirectory).toString();
+        String absoluteFileToValidateName = (new StringBuffer(absoluteRelativePath))
+                .append(fileToValidateName).toString();
+        String absoluteShexFileName = (new StringBuffer(absoluteRelativePath))
+                .append(shexFileName).toString();
+        String absoluteMappingFileName = (new StringBuffer(absoluteRelativePath))
+                .append(mappingFileName).toString();
+        String absoluteExpectedResultShapeMapFileName = (new StringBuffer(absoluteRelativePath))
+                .append(expectedResultShapeMapFileName).toString();
+        String data = null;
+        String shexWithTokens = null;
+        String mapping = null;
+        String expected = null;
+
+        try {
+            data = getFileDataAsString(absoluteFileToValidateName);
+            shexWithTokens = getFileDataAsString(absoluteShexFileName);
+            mapping = getFileDataAsString(absoluteMappingFileName);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+            fail();
+        }
+
+        String absoluteRelativePathWithProtocol = (new StringBuffer("file://")).append(absoluteRelativePath).toString();
+        String shex = StringUtils.replace(shexWithTokens, RELATIVE_PATH, absoluteRelativePathWithProtocol);
+        ResultShapeMap resultShapeMap = ShaclexValidator.validate(data, shex, mapping);
+        compareActualShapeMapWithExpected(resultShapeMap, absoluteExpectedResultShapeMapFileName);
+    }
+
+
+    private static String getFileDataAsString(String strUserDirectory, String strRelativeDirectory, String strFileName)
+            throws IOException {
+        String strAbsoluteFileName = (new StringBuffer(strUserDirectory))
+                .append(strRelativeDirectory)
+                .append(strFileName)
+                .toString();
+        File file = new File(strAbsoluteFileName);
+        return FileUtils.readFileToString(file, Charset.defaultCharset());
+    }
+
+    private static String getFileDataAsString(String strAbsoluteFileName)
+            throws IOException {
+        File file = new File(strAbsoluteFileName);
+        return FileUtils.readFileToString(file, Charset.defaultCharset());
+    }
 
     private static ShapeMap readCompactResultShapeMap(String strFileName, PrefixMap nodesPrefixMap, PrefixMap shapesPrefixMap)
             throws IOException {
@@ -170,7 +212,6 @@ public class ShaclexValidatorTest {
                 return false;
             }
         }
-
         return true;
     }
 

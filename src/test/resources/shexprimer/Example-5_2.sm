@@ -1,0 +1,3 @@
+inst:Employee2@<https://shex.io/examples/import/EmployeeSchema#EmployeeShape>,
+inst:Employee3@<https://shex.io/examples/import/EmployeeSchema#EmployeeShape>,
+inst:User1@<https://shex.io/examples/import/UserSchema#UserShape>

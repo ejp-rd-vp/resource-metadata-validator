@@ -1,0 +1,2 @@
+#fileToValidateName, shexFileName, mappingFileName, expectedResultMappingFile
+shexprimer/Example-5_2.ttl,shexprimer/Example-5_2.shex,shexprimer/Example-5_2.sm,shexprimer/expectedExample-5_2.sm

@@ -1,0 +1,3 @@
+inst:Employee2@<http://my.example/#EmployeeShape>,
+inst:Employee3@<http://my.example/#EmployeeShape>,
+inst:User1@<http://my.example/#UserShape>
