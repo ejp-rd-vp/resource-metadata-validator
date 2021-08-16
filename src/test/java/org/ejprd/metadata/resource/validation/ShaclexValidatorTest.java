@@ -8,6 +8,7 @@ import es.weso.shapemaps.ResultShapeMap;
 import es.weso.shapemaps.ShapeMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.opentest4j.AssertionFailedError;
@@ -159,6 +160,27 @@ public class ShaclexValidatorTest {
         compareActualShapeMapWithExpected(resultShapeMap, absoluteExpectedResultShapeMapFileName);
     }
 
+    @Test
+    void testShexValidationUsingStrings() {
+        String data = new StringBuilder("PREFIX inst: <http://example.com/users/> \n")
+                .append("PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n")
+                .append("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n")
+                .append("inst:User1 \n")
+                .append("foaf:name  'Bob Smith'^^xsd:string .").toString();
+
+        String schema = new StringBuilder("PREFIX my: <http://my.example/#> \n")
+                .append("PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n")
+                .append("PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n")
+                .append("my:UserShape { \n")
+                .append("foaf:name xsd:string \n")
+                .append("}").toString();
+
+        String mapping = new String("inst:User1@my:UserShape");
+
+        ResultShapeMap resultShapeMap = ShaclexValidator.validate(data, schema, mapping);
+
+        int i = 0;
+    }
 
     private static String getFileDataAsString(String strUserDirectory, String strRelativeDirectory, String strFileName)
             throws IOException {

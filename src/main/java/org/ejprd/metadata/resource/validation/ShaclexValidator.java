@@ -15,6 +15,7 @@ import java.io.InputStream;
 public class ShaclexValidator {
     private static Logger logger = LoggerFactory.getLogger(ShaclexValidator.class);
 
+
     public static ResultShapeMap validateUsingMappingFiles(String rdfFileName, String shexFileName, String shapeMapFileName)
                                                     throws FileNotFoundException{
 
@@ -41,6 +42,7 @@ public class ShaclexValidator {
     public static ResultShapeMap validate(String data, String shex, String shapeMap, ShExsOptions shExsOptions) {
         return ShExWrapper.validate(data, shex, shapeMap, shExsOptions);
     }
+
 
     public static ResultShapeMap validateUsingFocusNodeAndLabel(String rdfData, String shexSchema, String node, String label){
         ShExsOptions shExsOptions = ShExsOptions.defaultOptions();
