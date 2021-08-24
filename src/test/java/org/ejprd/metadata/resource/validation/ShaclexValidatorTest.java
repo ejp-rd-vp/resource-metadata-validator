@@ -72,7 +72,7 @@ public class ShaclexValidatorTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/shexprimer/testDataMappingFile.csv")
+    @CsvFileSource(resources = { "/shexprimer/testDataMappingFile.csv", "/metamodel/testDataMappingFile.csv"})
     void testShexPrimerExamplesUsingMappingFile(String fileToValidateName, String shexFileName, String mappingFileName,
                                                 String expectedResultShapeMapFileName) {
         String userDirectory = System.getProperty("user.dir");
