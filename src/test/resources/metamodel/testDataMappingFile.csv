@@ -1,5 +1,5 @@
 #fileToValidateName, shexFileName, mappingFileName, expectedResultMappingFile
-metamodel/organizationData.ttl,metamodel/organization.shex,metamodel/organization.sm,metamodel/expectedOrganization.sm
+metamodel/organization.ttl,metamodel/organization.shex,metamodel/organization.sm,metamodel/expectedOrganization.sm
 metamodel/location.ttl,metamodel/location.shex,metamodel/location.sm,metamodel/expectedLocation.sm
 metamodel/catalog.ttl,metamodel/catalog.shex,metamodel/catalog.sm,metamodel/expectedCatalog.sm
 metamodel/resource.ttl,metamodel/resource.shex,metamodel/resource.sm,metamodel/expectedResource.sm
