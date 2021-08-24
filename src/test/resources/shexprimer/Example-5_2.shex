@@ -1,8 +1,8 @@
 PREFIX ex: <http://ex.example/#>
 PREFIX my: <http://my.example/#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-BASE <${RelativePath}/shexprimer/>
-#BASE <file:///home/henriette/ebi-dev/ejprd/validator/resource-metadata-validator/src/test/resources/shexprimer/>
+#BASE <${RelativePath}/shexprimer/>
+BASE <file:///C:/ebi-dev/ejprd/resource-metadata-validator/src/test/resources/shexprimer/>
 #BASE <https://shex.io/examples/import/>
 IMPORT <UserSchema>
 

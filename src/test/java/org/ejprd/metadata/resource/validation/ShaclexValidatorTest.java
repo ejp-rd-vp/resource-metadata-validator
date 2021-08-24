@@ -8,6 +8,7 @@ import es.weso.shapemaps.ResultShapeMap;
 import es.weso.shapemaps.ShapeMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -21,6 +22,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -124,14 +127,21 @@ public class ShaclexValidatorTest {
         }
     }
 
+    @Disabled // Currently has to hardcode path to import. Ideally need to find a way around this.
     @ParameterizedTest
     @CsvFileSource(resources = "/shexprimer/testDataSchemasWithImports.csv")
     void testShexPrimerImportExamples(String fileToValidateName, String shexFileName, String mappingFileName,
                                                 String expectedResultShapeMapFileName) {
+
+        Path path = FileSystems.getDefault().getPath("");
+        logger.trace("path = " + path);
+
         String userDirectory = System.getProperty("user.dir");
+        logger.trace("userDirectory = " + userDirectory);
         String relativeDirectory = "/src/test/resources/";
         String absoluteRelativePath = (new StringBuffer(userDirectory))
                 .append(relativeDirectory).toString();
+        logger.trace("absoluteRelativePath = " + absoluteRelativePath);
         String absoluteFileToValidateName = (new StringBuffer(absoluteRelativePath))
                 .append(fileToValidateName).toString();
         String absoluteShexFileName = (new StringBuffer(absoluteRelativePath))
@@ -143,7 +153,6 @@ public class ShaclexValidatorTest {
         String data = null;
         String shexWithTokens = null;
         String mapping = null;
-        String expected = null;
 
         try {
             data = getFileDataAsString(absoluteFileToValidateName);

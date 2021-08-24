@@ -17,8 +17,6 @@ public class ValidationController {
 
     private static Logger logger = LoggerFactory.getLogger(ValidationController.class);
 
-
-
     @PostMapping(value = "/validateShex", consumes = { "multipart/form-data" })
     ResultShapeMap validateShex(@RequestParam MultipartFile data,
                                 @RequestParam MultipartFile shex,
