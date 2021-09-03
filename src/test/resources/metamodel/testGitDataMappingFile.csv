@@ -1,0 +1,8 @@
+#fileToValidateName, shexFileName, mappingFileName, expectedResultMappingFile
+metamodel/organization.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/organisation.shex,metamodel/organization.sm,metamodel/expectedOrganization.sm
+metamodel/location.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/location.shex,metamodel/location.sm,metamodel/expectedLocation.sm
+metamodel/catalog.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/catalog.shex,metamodel/catalog.sm,metamodel/expectedCatalog.sm
+metamodel/resource.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/resource.shex,metamodel/resource.sm,metamodel/expectedResource.sm
+metamodel/patientRegistry.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/patientRegistry.shex,metamodel/patientRegistry.sm,metamodel/expectedPatientRegistry.sm
+metamodel/biobank.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/biobank.shex,metamodel/biobank.sm,metamodel/expectedBiobank.sm
+metamodel/guideline.ttl,https://raw.githubusercontent.com/ejp-rd-vp/resource-metadata-schema/v1.0-branch/data/shex/guideline.shex,metamodel/guideline.sm,metamodel/expectedGuideline.sm

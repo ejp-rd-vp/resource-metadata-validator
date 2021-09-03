@@ -7,9 +7,9 @@ import es.weso.shapemaps.ResultShapeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class ShaclexValidator {
@@ -17,7 +17,7 @@ public class ShaclexValidator {
 
 
     public static ResultShapeMap validateUsingMappingFiles(String rdfFileName, String shexFileName, String shapeMapFileName)
-                                                    throws FileNotFoundException{
+            throws IOException {
 
         ShExsOptions shExsOptions = ShExsOptions.defaultOptions();
         ResultShapeMap resultShapeMap = validateUsingMappingFiles(rdfFileName, shexFileName, shapeMapFileName, shExsOptions);
@@ -25,11 +25,15 @@ public class ShaclexValidator {
     }
 
     public static ResultShapeMap validateUsingMappingFiles(String rdfFileName, String shexFileName, String shapeMapFileName,
-                                                           ShExsOptions shExsOptions) throws FileNotFoundException {
+                                                           ShExsOptions shExsOptions)
+            throws IOException {
 
-        InputStream rdfInputStream = new FileInputStream(rdfFileName);
-        InputStream shexInputStream = new FileInputStream(shexFileName);
-        InputStream shapeMapInputStream = new FileInputStream(shapeMapFileName);
+        URL rdfURL = new URL(rdfFileName);
+        URL shexURL = new URL(shexFileName);
+        URL shapeMapURL = new URL(shapeMapFileName);
+        InputStream rdfInputStream = new BufferedInputStream(rdfURL.openStream());
+        InputStream shexInputStream = new BufferedInputStream(shexURL.openStream());
+        InputStream shapeMapInputStream = new BufferedInputStream(shapeMapURL.openStream());
         ResultShapeMap resultShapeMap = ShExWrapper.validate(rdfInputStream, shexInputStream, shapeMapInputStream,
                 shExsOptions);
         return resultShapeMap;

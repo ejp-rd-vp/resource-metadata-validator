@@ -72,25 +72,47 @@ public class ShaclexValidatorTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = { "/shexprimer/testDataMappingFile.csv", "/metamodel/testDataMappingFile.csv"})
+    @CsvFileSource(resources = { "/shexprimer/testDataMappingFile.csv"})
     void testShexPrimerExamplesUsingMappingFile(String fileToValidateName, String shexFileName, String mappingFileName,
                                                 String expectedResultShapeMapFileName) {
+        testUsingMappingFile(fileToValidateName, shexFileName, mappingFileName, expectedResultShapeMapFileName);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = { "/metamodel/testDataMappingFile.csv"})
+    void testMinimalMetamodelExamplesUsingMappingFile(String fileToValidateName, String shexFileName, String mappingFileName,
+                                                String expectedResultShapeMapFileName) {
+        testUsingMappingFile(fileToValidateName, shexFileName, mappingFileName, expectedResultShapeMapFileName);
+    }
+
+
+    @ParameterizedTest
+    @CsvFileSource(resources = { "/metamodel/testGitDataMappingFile.csv"})
+    void testGitUsingMappingFile(String fileToValidateName, String shexUrl, String mappingFileName,
+                                 String expectedResultShapeMapFileName) {
         String userDirectory = System.getProperty("user.dir");
         String relativeDirectory = "/src/test/resources/";
-        String absoluteFileToValidateName = (new StringBuffer(userDirectory))
-                .append(relativeDirectory).append(fileToValidateName).toString();
-        String absoluteShexFileName = (new StringBuffer(userDirectory))
-                .append(relativeDirectory).append(shexFileName).toString();
-        String absoluteMappingFileName = (new StringBuffer(userDirectory))
-                .append(relativeDirectory).append(mappingFileName).toString();
+        String absoluteRelativeDirectoryURL = (new StringBuffer("file:///"))
+                .append(userDirectory)
+                .append(relativeDirectory)
+                .toString();
+        String absoluteFileToValidateName = (new StringBuffer(absoluteRelativeDirectoryURL))
+                .append(fileToValidateName)
+                .toString();
+        String absoluteMappingFileName = (new StringBuffer(absoluteRelativeDirectoryURL))
+                .append(mappingFileName)
+                .toString();
 
+        logger.trace("absoluteFileToValidateName = " + absoluteFileToValidateName);
+        logger.trace("shexURL = " + shexUrl);
+        logger.trace("absoluteMappingFileName = " + absoluteMappingFileName);
 
         Optional<ResultShapeMap> resultShapeMapOptional = Optional.empty();
         try {
             resultShapeMapOptional = Optional.of(ShaclexValidator.validateUsingMappingFiles(absoluteFileToValidateName,
-                    absoluteShexFileName, absoluteMappingFileName));
+                    shexUrl, absoluteMappingFileName));
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
         ResultShapeMap resultShapeMap = resultShapeMapOptional.get();
@@ -105,6 +127,51 @@ public class ShaclexValidatorTest {
 
         compareActualShapeMapWithExpected(resultShapeMap, absoluteExpectedResultShapeMapFileName);
     }
+
+    private void testUsingMappingFile(String fileToValidateName, String shexFileName, String mappingFileName, String expectedResultShapeMapFileName) {
+        String userDirectory = System.getProperty("user.dir");
+        String relativeDirectory = "/src/test/resources/";
+        String absoluteRelativeDirectoryURL = (new StringBuffer("file:///"))
+                .append(userDirectory)
+                .append(relativeDirectory)
+                .toString();
+        String absoluteFileToValidateName = (new StringBuffer(absoluteRelativeDirectoryURL))
+                .append(fileToValidateName)
+                .toString();
+        String absoluteShexFileName = (new StringBuffer(absoluteRelativeDirectoryURL))
+                .append(shexFileName)
+                .toString();
+        String absoluteMappingFileName = (new StringBuffer(absoluteRelativeDirectoryURL))
+                .append(mappingFileName)
+                .toString();
+
+        logger.trace("absoluteFileToValidateName = " + absoluteFileToValidateName);
+        logger.trace("absoluteShexFileName = " + absoluteShexFileName);
+        logger.trace("absoluteMappingFileName = " + absoluteMappingFileName);
+
+        Optional<ResultShapeMap> resultShapeMapOptional = Optional.empty();
+        try {
+            resultShapeMapOptional = Optional.of(ShaclexValidator.validateUsingMappingFiles(absoluteFileToValidateName,
+                    absoluteShexFileName, absoluteMappingFileName));
+
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        ResultShapeMap resultShapeMap = resultShapeMapOptional.get();
+
+        if (expectedResultShapeMapFileName == null || expectedResultShapeMapFileName.isEmpty()) {
+            logger.trace("Compact result: " + resultShapeMap.showShapeMap(false));
+            return;
+        }
+
+        String absoluteExpectedResultShapeMapFileName = (new StringBuffer(userDirectory))
+                .append(relativeDirectory).append(expectedResultShapeMapFileName).toString();
+
+        compareActualShapeMapWithExpected(resultShapeMap, absoluteExpectedResultShapeMapFileName);
+    }
+
+
+
 
     private void compareActualShapeMapWithExpected(ResultShapeMap resultShapeMap, String absoluteExpectedResultShapeMapFileName) {
         ShapeMap expectedShapeMap = null;
