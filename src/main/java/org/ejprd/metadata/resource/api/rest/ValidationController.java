@@ -1,6 +1,7 @@
 package org.ejprd.metadata.resource.api.rest;
 
 import es.weso.shapemaps.ResultShapeMap;
+import io.circe.Json;
 import org.apache.commons.io.IOUtils;
 import org.ejprd.metadata.resource.validation.ShaclexValidator;
 import org.slf4j.Logger;
@@ -18,9 +19,9 @@ public class ValidationController {
     private static Logger logger = LoggerFactory.getLogger(ValidationController.class);
 
     @PostMapping(value = "/validateShex", consumes = { "multipart/form-data" })
-    ResultShapeMap validateShex(@RequestParam MultipartFile data,
-                                @RequestParam MultipartFile shex,
-                                @RequestParam MultipartFile mapping) {
+    String validateShex(@RequestParam MultipartFile data,
+                      @RequestParam MultipartFile shex,
+                      @RequestParam MultipartFile mapping) {
         logger.info("### validateShex called");
         try {
             logger.trace("data = " + data.getOriginalFilename());
@@ -50,7 +51,7 @@ public class ValidationController {
                 optionalMapping.get());
 
         logger.trace("resultShapeMap = " + resultShapeMap.showShapeMap(true));
-        return resultShapeMap;
+        return resultShapeMap.showShapeMap(true);
     }
 
 
