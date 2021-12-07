@@ -4,10 +4,8 @@ As part of the European Joint Programme (EJP) for Rare Disease, we are developin
 standards for rare disease registries to describe their metadata that will improve the 
 FAIR-ness of these resources.
 
-This service provides a REST endpoint that enables users to validate 
-
-
-
+This service provides a REST endpoint that enables users to validate a turtle file against a SHeX shape. 
+In response this service will return a detailed validation report. 
 
 
 ## Building and running the application
