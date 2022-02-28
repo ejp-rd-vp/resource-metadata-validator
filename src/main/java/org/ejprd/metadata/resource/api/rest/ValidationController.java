@@ -21,7 +21,8 @@ public class ValidationController {
     @PostMapping(value = "/validateShex", consumes = { "multipart/form-data" })
     String validateShex(@RequestParam MultipartFile data,
                       @RequestParam MultipartFile shex,
-                      @RequestParam MultipartFile mapping) {
+                      @RequestParam MultipartFile mapping,
+                      @RequestParam(value = "showDetail", defaultValue = "false", required = false) boolean showDetail) {
         logger.info("### validateShex called");
         try {
             logger.trace("data = " + data.getOriginalFilename());
@@ -51,7 +52,7 @@ public class ValidationController {
                 optionalMapping.get());
 
         logger.trace("resultShapeMap = " + resultShapeMap.showShapeMap(true));
-        return resultShapeMap.showShapeMap(true);
+        return resultShapeMap.showShapeMap(showDetail);
     }
 
 

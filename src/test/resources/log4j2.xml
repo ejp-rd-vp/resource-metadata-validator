@@ -4,7 +4,7 @@
     <Console name="Console" target="SYSTEM_OUT">
         <PatternLayout pattern="%markerSimpleName %-5p %C.%M():%L - %msg %ex{full}%n"/>
     </Console>
-    <File name="Log" fileName="/home/henriette/ebi-dev/ejprd/validator/resource-metadata-validator/logs/TestApp.log">
+    <File name="Log" fileName="./logs/App.log">
       <PatternLayout>
         <Pattern>%d{yyyy-MM-dd HH:mm:ss, SSS} %-5p %C.%M():%L - %msg %ex{full}%n</Pattern>
       </PatternLayout>
