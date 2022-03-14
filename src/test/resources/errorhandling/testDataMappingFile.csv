@@ -1,0 +1,3 @@
+#fileToValidateName, shexFileName, mappingFileName, expectedResultMappingFile
+#errorhandling/organization.ttl,errorhandling/organization.shex,errorhandling/organization.sm
+errorhandling/organization_broken.ttl,errorhandling/organization.shex,errorhandling/organization.sm
