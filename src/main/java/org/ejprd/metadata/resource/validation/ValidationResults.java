@@ -3,9 +3,12 @@ package org.ejprd.metadata.resource.validation;
 import es.weso.rdf.nodes.IRI;
 import es.weso.shapemaps.IRILabel;
 import es.weso.shapemaps.Info;
+import scala.jdk.javaapi.CollectionConverters;
+import scala.jdk.javaapi.OptionConverters;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ValidationResults {
     private Map conformantShapes = new HashMap<IRI, Map<IRILabel, Info>>();
@@ -45,9 +48,11 @@ public class ValidationResults {
         stringBuilder.append("Evidence of conformance of the data against the following shapes are:\n");
         conformantShapes.forEach((k, v) -> {
             Map<IRILabel, Info> detail = (Map<IRILabel, Info>) conformantShapes.get(k);
-            stringBuilder.append("Shape " + v + " is conformant based on the following evidence:\n");
+            stringBuilder.append("Shape " + k + " is conformant based on the following evidence:\n");
             detail.forEach((k1, v1) -> {
-                stringBuilder.append("Label " + k1 + " " + v1.toString() + "\n");
+                Optional<String> reasonOptional = OptionConverters.toJava(v1.reason());
+                if (reasonOptional.isPresent())
+                    stringBuilder.append("Label has " + k1.iri().str() + " " + reasonOptional.get() + "\n");;
             });
         });
 
@@ -60,9 +65,11 @@ public class ValidationResults {
         stringBuilder.append("Evidence of non-conformance of the data against the following shapes are:\n");
         nonConformantShapes.forEach((k, v) -> {
             Map<IRILabel, Info> detail = (Map<IRILabel, Info>) nonConformantShapes.get(k);
-            stringBuilder.append("Shape " + v + " is non-conformant based on the following evidence:\n");
+            stringBuilder.append("Shape " + k + " is non-conformant based on the following evidence:\n");
             detail.forEach((k1, v1) -> {
-                stringBuilder.append("Label " + k1 + " " + v1.toString() + "\n");
+                Optional<String> reasonOptional = OptionConverters.toJava(v1.reason());
+                if (reasonOptional.isPresent())
+                    stringBuilder.append("Label has " + k1.iri().str() + " " + reasonOptional.get() + "\n");
             });
         });
 

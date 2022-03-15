@@ -105,7 +105,6 @@ public class ShaclexValidator {
             }
         });
         validationResults.updateValidationResults();
-        logger.trace(validationResults.toString());
         return validationResults;
     }
 }
