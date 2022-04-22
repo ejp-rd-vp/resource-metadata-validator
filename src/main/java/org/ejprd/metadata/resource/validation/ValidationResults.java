@@ -3,7 +3,7 @@ package org.ejprd.metadata.resource.validation;
 import es.weso.rdf.nodes.IRI;
 import es.weso.shapemaps.IRILabel;
 import es.weso.shapemaps.Info;
-import scala.jdk.javaapi.CollectionConverters;
+import io.circe.Json;
 import scala.jdk.javaapi.OptionConverters;
 
 import java.util.HashMap;
@@ -16,6 +16,7 @@ public class ValidationResults {
     private String validationResult = "Not validated";
     private String detailedValidationFailureErrors = "";
     private String detailedEvidenceOfConformance = "";
+    private Json jsonReasons = Json.Null();
 
     public Map getConformantShapes() {
         return conformantShapes;
@@ -68,8 +69,11 @@ public class ValidationResults {
             stringBuilder.append("Shape " + k + " is non-conformant based on the following evidence:\n");
             detail.forEach((k1, v1) -> {
                 Optional<String> reasonOptional = OptionConverters.toJava(v1.reason());
+                Optional<Json> jsonReasonOptional = OptionConverters.toJava(v1.appInfo());
                 if (reasonOptional.isPresent())
                     stringBuilder.append("Label has " + k1.iri().str() + " " + reasonOptional.get() + "\n");
+                if (jsonReasonOptional.isPresent())
+                    jsonReasons.deepMerge(jsonReasonOptional.get());
             });
         });
 
