@@ -1,7 +1,5 @@
 package org.ejprd.metadata.resource.api.rest;
 
-import scala.concurrent.impl.FutureConvertersImpl;
-
 import java.util.Arrays;
 
 public enum ResultType {

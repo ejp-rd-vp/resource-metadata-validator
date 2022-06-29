@@ -19,7 +19,6 @@ import scala.collection.Iterator;
 import scala.collection.immutable.List;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -83,12 +82,6 @@ public class ShaclexValidatorTest {
     void testMinimalMetamodelExamplesUsingMappingFile(String fileToValidateName, String shexFileName, String mappingFileName,
                                                 String expectedResultShapeMapFileName) {
         testUsingMappingFile(fileToValidateName, shexFileName, mappingFileName, expectedResultShapeMapFileName);
-    }
-
-    @ParameterizedTest
-    @CsvFileSource(resources = { "/errorhandling/testDataMappingFile.csv"})
-    void testErrorHandlingReadableResult(String fileToValidateName, String shexFileName, String mappingFileName) {
-        testUsingMappingFileWithReadbleResult(fileToValidateName, shexFileName, mappingFileName);
     }
 
     @ParameterizedTest
@@ -174,41 +167,6 @@ public class ShaclexValidatorTest {
                 .append(relativeDirectory).append(expectedResultShapeMapFileName).toString();
 
         compareActualShapeMapWithExpected(resultShapeMap, absoluteExpectedResultShapeMapFileName);
-    }
-
-
-    private void testUsingMappingFileWithReadbleResult(String fileToValidateName, String shexFileName, String mappingFileName) {
-        String userDirectory = System.getProperty("user.dir");
-        String relativeDirectory = "/src/test/resources/";
-        String absoluteRelativeDirectoryURL = (new StringBuffer("file:///"))
-                .append(userDirectory)
-                .append(relativeDirectory)
-                .toString();
-        String absoluteFileToValidateName = (new StringBuffer(absoluteRelativeDirectoryURL))
-                .append(fileToValidateName)
-                .toString();
-        String absoluteShexFileName = (new StringBuffer(absoluteRelativeDirectoryURL))
-                .append(shexFileName)
-                .toString();
-        String absoluteMappingFileName = (new StringBuffer(absoluteRelativeDirectoryURL))
-                .append(mappingFileName)
-                .toString();
-
-        logger.trace("absoluteFileToValidateName = " + absoluteFileToValidateName);
-        logger.trace("absoluteShexFileName = " + absoluteShexFileName);
-        logger.trace("absoluteMappingFileName = " + absoluteMappingFileName);
-
-        Optional<ValidationResults> validationResultsOptional = Optional.empty();
-        try {
-            validationResultsOptional = Optional.of(ShaclexValidator.validateUsingMappingFilesAndReadableResult(absoluteFileToValidateName,
-                    absoluteShexFileName, absoluteMappingFileName));
-
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        }
-        ValidationResults validationResults = validationResultsOptional.get();
-
-        logger.trace("Validation result = " + validationResults.getShortValidationResult() + "####");
     }
 
     private void compareActualShapeMapWithExpected(ResultShapeMap resultShapeMap, String absoluteExpectedResultShapeMapFileName) {

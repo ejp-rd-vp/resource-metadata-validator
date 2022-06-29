@@ -1,0 +1,1 @@
+java -jar ./target/resource-metadata-validator-0.0.1-SNAPSHOT.jar
