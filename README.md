@@ -34,7 +34,7 @@ can be used to validate Organization data:
 curl -F "data=@$PROJECT_ROOT/src/test/resources/metamodel/organization.ttl" \
 -F "shex=@$PROJECT_ROOT/src/test/resources/metamodel/organization.shex" \
 -F "mapping=@$PROJECT_ROOT/src/test/resources/metamodel/organization.sm" \
--F "showDetail=true" localhost:8080/validateShex
+-F "showDetail=true" localhost:8080/api/resource-metadata-validator/validateShex
 ```
 
 ### On Windows
@@ -42,5 +42,10 @@ curl -F "data=@$PROJECT_ROOT/src/test/resources/metamodel/organization.ttl" \
 curl -F "data=@$PROJECT_ROOT/src/test/resources/metamodel/organization.ttl" ^
 -F "shex=@$PROJECT_ROOT/src/test/resources/metamodel/organization.shex" ^
 -F "mapping=@$PROJECT_ROOT/src/test/resources/metamodel/organization.sm" ^
-localhost:8080/validateShex
+localhost:8080/api/resource-metadata-validator/validateShex
 ```
+
+## Swagger documentation
+Documentation can be found at $HOST/api/resource-metadata-validator/docs.html and 
+the JSON description of the API can be found at $HOST/api/resource-metadata-validator/docs.
+A currently hosted instance can be found at http://45.88.81.202/api/resource-metadata-validator/docs.html.
